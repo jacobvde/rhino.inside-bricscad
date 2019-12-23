@@ -444,4 +444,28 @@ namespace GH_BC.Types
       return "Profile " + Value.GetStandard + " " + Value.GetName + " " + Value.GetShape;
     }
   }
+
+  public class Composition : BimObject<Bricscad.Bim.BIMComposition>
+  {
+    public override string TypeName => "Composition";
+    public override string TypeDescription => "Composition";
+
+    public Composition() { }
+
+    public Composition(Composition comp)
+    {
+      Value = comp.Value;
+    }
+    public Composition(Bricscad.Bim.BIMComposition comp)
+    {
+      Value = comp;
+    }
+
+    public override IGH_Goo Duplicate() => new Composition(this);
+
+    public override string ToString()
+    {
+      return "Composition " + Value.Name + " " + Value.GetTypeName;
+    }
+  }
 }
