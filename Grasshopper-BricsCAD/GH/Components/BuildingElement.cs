@@ -21,6 +21,7 @@ namespace GH_BC
       pManager[pManager.AddParameter(new SpatialLocation(), "SpatialLocation", "SL", "Spatial location", GH_ParamAccess.item)].Optional = true;
       pManager[pManager.AddParameter(new Profile(), "Profile", "P", "Assigned profile", GH_ParamAccess.item)].Optional = true;
       pManager[pManager.AddParameter(new Composition(), "Composition", "C", "Assigned Composition", GH_ParamAccess.item)].Optional = true;
+      pManager[pManager.AddTextParameter("Material", "M", "Material to assign to the Geometry in BricsCAD (Overrides the Bake Dialog Material.)", GH_ParamAccess.item)].Optional = true;
     }
     protected override void RegisterOutputParams(GH_OutputParamManager pManager)
     {
@@ -77,6 +78,11 @@ namespace GH_BC
         }
       }
 
+      // BUG: Only gets applied when baking a second time ...
+      string material = string.Empty;
+      DA.GetData("Material", ref material);
+      _material = material;
+
       var createdProfileId = _OdDb.ObjectId.Null;
       _OdDb.ObjectEventHandler objAppended = (s, e) => createdProfileId = e.DBObject.ObjectId;
       PlugIn.LinkedDocument.Database.ObjectAppended += objAppended;
@@ -87,7 +93,7 @@ namespace GH_BC
         spatialLocation?.AssignToEntity(id);
         Bricscad.Bim.BIMClassification.ClassifyAs(id, elementType);
         bimProfile?.ApplyProfileTo(id, 0, true);
-        bimComposition?.AssignToEntity(id, -1);
+        bimComposition?.AssignToEntity(id, -1.0);
         //replace curve with created solid profile
         if (DatabaseUtils.isCurve(id) && !createdProfileId.IsNull)
         {
