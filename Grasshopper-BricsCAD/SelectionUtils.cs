@@ -80,7 +80,6 @@ namespace GH_BC
           selectedSubents = selection.Value.GetObjectIds().Select(objId =>
                                      new FullSubentityPath(new ObjectId[] { objId },
                                      new SubentityId(SubentityType.Null, 0))).ToList();
-
         }
       }
       return selectedSubents;

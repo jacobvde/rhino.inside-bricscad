@@ -170,21 +170,24 @@ namespace GH_BC
     {
       var dialog = new Bricscad.Windows.ColorDialog();
       dialog.ShowDialog();
-      Color = dialog.Color;
-      if (dialog.Color.IsByBlock)
+      if (dialog.Color != null)
       {
-        ColorButton.Text = "ByBlock";
-        ColorButton.BackColor = System.Drawing.SystemColors.ButtonFace;
-      }
-      else if (dialog.Color.IsByLayer)
-      {
-        ColorButton.Text = "ByLayer";
-        ColorButton.BackColor = System.Drawing.SystemColors.ButtonFace;
-      }
-      else
-      {
-        ColorButton.Text = "";
-        ColorButton.BackColor = Color.ColorValue;
+        Color = dialog.Color;
+        if (dialog.Color.IsByBlock)
+        {
+          ColorButton.Text = "ByBlock";
+          ColorButton.BackColor = System.Drawing.SystemColors.ButtonFace;
+        }
+        else if (dialog.Color.IsByLayer)
+        {
+          ColorButton.Text = "ByLayer";
+          ColorButton.BackColor = System.Drawing.SystemColors.ButtonFace;
+        }
+        else
+        {
+          ColorButton.Text = "";
+          ColorButton.BackColor = Color.ColorValue;
+        }
       }
     }
 
