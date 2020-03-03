@@ -21,7 +21,7 @@ namespace GH_BC
     public CompositionName()
     {
       Category = "BricsCAD";
-      SubCategory = GhUI.BimData;
+      SubCategory = GhUI.BimData; // TODO which one?
       Name = "Composition Names";
       Description = "Provides a name picker for all the compositions present in Compositions in BricsCAD.";
       ListMode = GH_ValueListMode.DropDown;
@@ -57,7 +57,7 @@ namespace GH_BC
 
   public class LibraryComposition : GH_Component
   {
-    public LibraryComposition() : base("Composition", "C", "Returns a composition, according to the given name.", "BricsCAD", GhUI.Information)
+    public LibraryComposition() : base("Composition", "C", "Returns a composition, according to the given name.", "BricsCAD", GhUI.Information) // TODO SubCategory?
     { }
     public override Guid ComponentGuid => new Guid("801C8D72-660F-41B5-BFCA-91F49F2773EA");
     public override GH_Exposure Exposure => GH_Exposure.primary;
