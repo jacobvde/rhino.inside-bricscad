@@ -29,7 +29,7 @@ namespace GH_BC
     }
     public override Guid ComponentGuid => new Guid("1C4D4F3C-3E37-4A1E-93D7-B4830ACD48CB");
     public override GH_Exposure Exposure => GH_Exposure.secondary;
-    protected override Bitmap Icon => Properties.Resources.link;
+    protected override Bitmap Icon => Properties.Resources.link; // TODO change resource
     public void RefreshList()
     {
       var selectedItems = ListItems.Where(x => x.Selected).Select(x => x.Expression).ToList();
@@ -61,7 +61,7 @@ namespace GH_BC
     { }
     public override Guid ComponentGuid => new Guid("801C8D72-660F-41B5-BFCA-91F49F2773EA");
     public override GH_Exposure Exposure => GH_Exposure.primary;
-    protected override Bitmap Icon => Properties.Resources.link;
+    protected override Bitmap Icon => Properties.Resources.link; // TODO change resource
     protected override void RegisterInputParams(GH_InputParamManager pManager)
     {
       pManager[pManager.AddTextParameter("CompositionName", "N", "Composition name", GH_ParamAccess.item)].Optional = true;
@@ -101,7 +101,7 @@ namespace GH_BC
     { }
     public override Guid ComponentGuid => new Guid("E08676DF-F1AF-4FEB-ABB2-FF77E4695B5C");
     public override GH_Exposure Exposure => GH_Exposure.primary;
-    protected override Bitmap Icon => Properties.Resources.link;
+    protected override Bitmap Icon => Properties.Resources.link; // TODO Change resource
     protected override void RegisterInputParams(GH_InputParamManager pManager)
     {
       pManager.AddParameter(new Composition(), "Composition", "C", "Composition information", GH_ParamAccess.item);
