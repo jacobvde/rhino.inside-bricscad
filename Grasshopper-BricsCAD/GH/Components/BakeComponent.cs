@@ -44,6 +44,12 @@ namespace GH_BC
         return;
       _needBake = false;
 
+      string material = string.Empty;
+      if (DA.GetData("Material", ref material))
+      {
+        _material = material;
+      }
+
       var geometry = new GH_Structure<IGH_GeometricGoo>();
       if (!DA.GetDataTree("Geometry", out geometry))
         return;
@@ -65,8 +71,7 @@ namespace GH_BC
       {
         _color = bakeProperties.Color;
         _layer = bakeProperties.Layer;
-        if (string.IsNullOrEmpty(_material))
-          _material = bakeProperties.Material;
+        _material = bakeProperties.Material;
         _needBake = true;
 
         PlugIn.LinkedDocument?.Database?.StartUndoRecord();
@@ -147,8 +152,7 @@ namespace GH_BC
         obj._needBake = true;
         obj._color = bakeProperties.Color;
         obj._layer = bakeProperties.Layer;
-        if (string.IsNullOrEmpty(obj._material))
-          obj._material = bakeProperties.Material;
+        obj._material = bakeProperties.Material;
         obj.ExpireSolution(false);
       }
       if (needExpire)

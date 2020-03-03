@@ -52,6 +52,12 @@ namespace GH_BC
       if (DA.GetData("SpatialLocation", ref location))
         spatialLocation = location.Value;
 
+      string material = string.Empty;
+      if (DA.GetData("Material", ref material))
+      {
+        _material = material;
+      }
+
       var objIds = BakeGhGeometry(geometry);
       if (objIds == null)
         return;
@@ -77,11 +83,6 @@ namespace GH_BC
           bimComposition = dummy;
         }
       }
-
-      // BUG: Only gets applied when baking a second time ...
-      string material = string.Empty;
-      DA.GetData("Material", ref material);
-      _material = material;
 
       var createdProfileId = _OdDb.ObjectId.Null;
       _OdDb.ObjectEventHandler objAppended = (s, e) => createdProfileId = e.DBObject.ObjectId;
