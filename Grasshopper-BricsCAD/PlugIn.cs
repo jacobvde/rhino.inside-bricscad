@@ -17,7 +17,8 @@ namespace GH_BC
   {
     private RhinoCore _rhinoCore;
     private static bool _grasshopperLoaded = false;
-    private static bool _neewRedraw = true;
+    private static bool _needRedraw = true;
+    private static bool _frozen = false;
     private GrasshopperPreview _preview = null;
     static readonly string _rhinoPath = (string) Microsoft.Win32.Registry.GetValue
     (
@@ -119,18 +120,32 @@ namespace GH_BC
       if (_preview != null)
       {
         _preview.Init();
-        if (_neewRedraw || _preview.SelectionPreviewChanged())
+        if (_needRedraw || _preview.SelectionPreviewChanged())
         {
-          _neewRedraw = false;
-          _preview.BuildScene();
-          if (LinkedDocument == Application.DocumentManager.MdiActiveDocument)
-            LinkedDocument.Editor.UpdateScreen();
+          _needRedraw = false;
+          if (!_frozen)
+          {
+            _preview.BuildScene();
+            if (LinkedDocument == Application.DocumentManager.MdiActiveDocument)
+              LinkedDocument.Editor.UpdateScreen();
+          }
         }
       }
     }
 
-    public static void SetNeetRedraw() { _neewRedraw = true; }
-
+    public static void SetNeedRedraw() { _needRedraw = true; }
+    public static void ToggleFrozen()
+    {
+      if (_frozen)
+      {
+        _frozen = false;
+        _needRedraw = true;
+      }
+      else
+      {
+        _frozen = true;
+      }
+    }
     static void OnObjectModified(object sender, _OdDb.ObjectEventArgs e)
     {
       var objId = e.DBObject.ObjectId;
@@ -174,7 +189,7 @@ namespace GH_BC
       Instance._preview = new GrasshopperPreview();
 
       ExpireGH();
-      SetNeetRedraw();
+      SetNeedRedraw();
     }
     private static void ExpireGH()
     {

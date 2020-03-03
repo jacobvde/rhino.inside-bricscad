@@ -38,7 +38,7 @@ namespace GH_BC
 
       if (definition != ActiveDefinition)
       {
-        PlugIn.SetNeetRedraw();
+        PlugIn.SetNeedRedraw();
         UnhighlightBcData();
         if (ActiveDefinition != null)
         {
@@ -84,23 +84,23 @@ namespace GH_BC
     #region GH Doucement event handlers
     private static void Document_DefaultPreviewColourChanged(System.Drawing.Color colour)
     {
-      PlugIn.SetNeetRedraw();
+      PlugIn.SetNeedRedraw();
     }
     private static void Editor_VisibleChanged(object sender, EventArgs e)
     {
-      PlugIn.SetNeetRedraw();
+      PlugIn.SetNeedRedraw();
     }
     private void ActiveDefinition_SettingsChanged(object sender, GH_DocSettingsEventArgs e)
     {
-      PlugIn.SetNeetRedraw();
+      PlugIn.SetNeedRedraw();
     }
     private void ActiveDefinition_ModifiedChanged(object sender, GH_DocModifiedEventArgs e)
     {
-      PlugIn.SetNeetRedraw();
+      PlugIn.SetNeedRedraw();
     }
     private void ActiveDefinition_SolutionEnd(object sender, GH_SolutionEventArgs e)
     {
-      PlugIn.SetNeetRedraw();
+      PlugIn.SetNeedRedraw();
     }
     #endregion
 
@@ -146,7 +146,7 @@ namespace GH_BC
     void ObjectChanged(IGH_DocumentObject sender, GH_ObjectChangedEventArgs e)
     {
       if (e.Type == GH_ObjectEventType.Preview)
-        PlugIn.SetNeetRedraw();
+        PlugIn.SetNeedRedraw();
     }
     void HighlightBcData(IGH_Param param)
     {
