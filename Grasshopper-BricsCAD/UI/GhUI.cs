@@ -61,6 +61,7 @@ namespace GH_BC
         };
         freezeButton.Click += (s, e) => { PlugIn.ToggleFrozen(); };
         freezeButton.Alignment = ToolStripItemAlignment.Right; // TODO location of button ok?
+        freezeButton.CheckOnClick = true;
         toolbar.Items.Add(freezeButton);
       }
     }
