@@ -55,11 +55,12 @@ namespace GH_BC
         bakeSelectedButton.Click += (s, e) => { BakeComponent.BakeSelectedComponents(); };
         toolbar.Items.Add(bakeSelectedButton);
 
-        var freezeButton = new ToolStripButton(Properties.Resources.link) // TODO resource + location.
+        var freezeButton = new ToolStripButton(Properties.Resources.link) // TODO resource
         {
           ToolTipText = "Freeze BricsCAD Preview"
         };
         freezeButton.Click += (s, e) => { PlugIn.ToggleFrozen(); };
+        freezeButton.Alignment = ToolStripItemAlignment.Right; // TODO location of button ok?
         toolbar.Items.Add(freezeButton);
       }
     }
