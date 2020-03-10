@@ -19,7 +19,7 @@ namespace GH_BC
     private static bool _grasshopperLoaded = false;
     private static bool _neewRedraw = true;
     private GrasshopperPreview _preview = null;
-    static readonly string _rhinoPath = (string) Microsoft.Win32.Registry.GetValue
+    static readonly string _rhinoPath = (string)Microsoft.Win32.Registry.GetValue
     (
       @"HKEY_LOCAL_MACHINE\SOFTWARE\McNeel\Rhinoceros\7.0\Install", "Path",
       Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles), "Rhino WIP", "System")
@@ -32,7 +32,7 @@ namespace GH_BC
     static List<_OdDb.Handle> _appended = new List<_OdDb.Handle>();
     static List<string> _commands = new List<string>();
 
-    static HashSet<string> _commandToExpire = new HashSet<string>(){ "BIMSPATIALLOCATIONS" };
+    static HashSet<string> _commandToExpire = new HashSet<string>() { "BIMSPATIALLOCATIONS" };
 
     #region Plugin static constructor
     static PlugIn()
@@ -96,6 +96,7 @@ namespace GH_BC
       editor.WriteMessage($"\nGrasshopper-BricsCAD Connection {version}");
       Application.Idle += onIdle;
       Application.DocumentManager.DocumentDestroyed += OnBcDocDestroyed;
+      Application.QuitWillStart += OnBcAppQuitWillStart;
     }
     public void Terminate()
     {
@@ -110,6 +111,14 @@ namespace GH_BC
       {
         // ignored
       }
+    }
+
+    public void OnBcAppQuitWillStart(object sender, EventArgs e)
+    {
+      // open save dialog for unsaved gh files
+      Grasshopper.Plugin.GH_PluginUtil.UnloadGrasshopper();
+      // update recent files and save changed settings
+      Grasshopper.Plugin.GH_PluginUtil.SaveSettings();
     }
 
     #endregion // IExtensionApplication Members
@@ -219,7 +228,7 @@ namespace GH_BC
       var bCoff = Grasshopper.Instances.Settings.GetValue("Assemblies:COFF", true);
       Grasshopper.Instances.Settings.SetValue("Assemblies:COFF", false);
 
-      var rc = (bool) LoadGHAProc.Invoke
+      var rc = (bool)LoadGHAProc.Invoke
       (
         Grasshopper.Instances.ComponentServer,
         new object[] { new Grasshopper.Kernel.GH_ExternalFile(Assembly.GetExecutingAssembly().Location), false }
